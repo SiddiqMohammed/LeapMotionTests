@@ -5,12 +5,13 @@ using UnityEngine;
 public class gameController : MonoBehaviour
 {
     public GameObject ball;
+    public GameObject cube;
     public Transform spawnPoint;
 
     // Start is called before the first frame update
     void Start()
     {
-        spawnBall();
+        // spawnBall();
     }
 
     // Update is called once per frame
@@ -20,11 +21,20 @@ public class gameController : MonoBehaviour
         {
             spawnBall();
         }
+        if(Input.GetKeyDown(KeyCode.C))
+        {
+            spawnCube();
+        }
         
     }
 
     void spawnBall()
     {
         Instantiate(ball, spawnPoint.position, Quaternion.identity);
+    }
+
+    void spawnCube()
+    {
+        Instantiate(cube, spawnPoint.position, Quaternion.identity);
     }
 }

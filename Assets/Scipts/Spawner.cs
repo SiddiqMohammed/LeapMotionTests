@@ -21,6 +21,7 @@ public class Spawner : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.M))
         {
             spawnCube(5);
+            spawnBall(10);
         }
     }
 

@@ -175,7 +175,7 @@ namespace Leap.Unity.Interaction {
       // Set up primary hover point Transforms for the fingertips. We'll only use
       // some of them, depending on user settings.
       for (int i = 0; i < 5; i++) {
-        Transform fingertipTransform = new GameObject("Fingertip Transform").transform;
+        Transform fingertipTransform = new GameObject("Fingertip Transform " + (i + 1)).transform;
         fingertipTransform.parent = this.transform;
         _backingFingertipTransforms.Add(fingertipTransform);
         _fingertipTransforms.Add(null);

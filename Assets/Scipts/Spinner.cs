@@ -32,11 +32,7 @@ public class Spinner : MonoBehaviour
 
     Transform Palm;
 
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+
 
     // Update is called once per frame
     void Update()
@@ -68,10 +64,17 @@ public class Spinner : MonoBehaviour
         // Rotate the cube by converting the angles into a quaternion.
         Quaternion target = Quaternion.Euler(tiltAroundX, 0, tiltAroundZ);
 
-        // if (Input.GetKeyDown(KeyCode.U))
-        // {}
         // Dampen towards the target rotation
         transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
+        
+        // if (Input.GetKeyDown(KeyCode.U))
+        // {
+        //     // Rotate the cube by converting the angles into a quaternion.
+        //     Quaternion target = Quaternion.Euler(0, 0, 0);
+
+        //     // Dampen towards the target rotation
+        //     transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
+        // }
         
     }
 }

@@ -30,7 +30,7 @@ public class Spinner : MonoBehaviour
 
     float xPos, yPos, zPos;
 
-    Transform testPlane;
+    Transform Palm;
 
     // Start is called before the first frame update
     void Start()
@@ -45,17 +45,17 @@ public class Spinner : MonoBehaviour
         {
             if (gameObject.name == "cubeLeft")
             {
-                testPlane = GameObject.Find("InteractionHand_L").transform.Find("Palm Transform");
+                Palm = GameObject.Find("InteractionHand_L").transform.Find("Palm Transform");
             } 
             else
             {
-                testPlane = GameObject.Find("InteractionHand_R").transform.Find("Palm Transform");
+                Palm = GameObject.Find("InteractionHand_R").transform.Find("Palm Transform");
             }
-            print("POS " + testPlane.transform.position);            
-            // print("POS " + testPlane.transform.position.x);            
-            xPos = testPlane.transform.position.x;
-            yPos = testPlane.transform.position.y;
-            zPos = testPlane.transform.position.z;
+            print("POS " + Palm.transform.position);            
+            // print("POS " + Palm.transform.position.x);            
+            xPos = Palm.transform.position.x;
+            yPos = Palm.transform.position.y;
+            zPos = Palm.transform.position.z;
         }
         catch
         {}

@@ -16,17 +16,8 @@ using UnityEngine;
 public class grabSpin : MonoBehaviour
 {
 
-     public string currentGestureName;
-
     public float tolerance;
-    public Vector3[] leftHandPos = new Vector3[15];
-    public Vector3[] rightHandPos = new Vector3[15];
-    public bool saveActive = true;
-
     public List<Gesture> gestureList;
-
-    float smooth = 5.0f;
-    float tiltAngle = 60.0f;
 
     float xPos, yPos, zPos;
 
@@ -34,28 +25,69 @@ public class grabSpin : MonoBehaviour
     Transform IndexFinger;
     Transform MiddleFinger;
 
+    Vector3 palmPos, IndexPos, MiddlePos;
+    Vector3 PreviousLeastPosition = new Vector3(100000f, 10000f, 10000f);
+
+    double FistValue = 0.08039556;
+
+    bool setCallibrator = false;
+
 
     // Update is called once per frame
     void Update()
     {
         try
         {
-            if (gameObject.name == "cubeLeft")
-            {
-                Palm = GameObject.Find("InteractionHand_L").transform.Find("Palm Transform");
-                IndexFinger = GameObject.Find("InteractionHand_L").transform.Find("Palm Transform");
+            // IndexFinger is Fingertip Transform 2
+            // MiddleFinger is Fingertip Transform 3
+            
 
-            } 
-            else
+            Palm = GameObject.Find("InteractionHand_L").transform.Find("Palm Transform");
+            IndexFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 2");
+            MiddleFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 3");
+
+            // PalmR = GameObject.Find("InteractionHand_R").transform.Find("Palm Transform");
+            // IndexFingerR = GameObject.Find("InteractionHand_R").transform.Find("Fingertip Transform 2");
+            // MiddleFingerR = GameObject.Find("InteractionHand_R").transform.Find("Fingertip Transform 3");
+
+
+            palmPos = Palm.transform.position;
+            IndexPos = IndexFinger.transform.position;
+            MiddlePos = MiddleFinger.transform.position;
+            
+            print(palmPos.x);
+            print(IndexPos.x);
+
+            // calibrate fist
+            if (Input.GetKeyDown(KeyCode.A))
             {
-                Palm = GameObject.Find("InteractionHand_R").transform.Find("Palm Transform");
+                setCallibrator = true;
+                print(palmPos);
+                print(IndexPos);
+
             }
-            print("POS " + Palm.transform.position);            
-            // print("POS " + Palm.transform.position.x);            
-            // xPos = Palm.transform.position.x;
-            // yPos = Palm.transform.position.y;
-            // zPos = Palm.transform.position.z;
 
+            if (setCallibrator)
+            {
+                if (palmPos.x - IndexPos.x < PreviousLeastPosition.x)
+                {
+                    PreviousLeastPosition.x = IndexPos.x;
+                }
+            }
+
+
+            // if (palmPos.x - IndexPos.x == (FistValue + 0.1) || palmPos.x - IndexPos.x == (FistValue - 0.1))
+            // {
+            //     print("fist");
+            // }
+            // else
+            // {
+            //     print("open");
+            // }
+
+
+            // print("POS " + Palm.transform.position);            
+            // print(PreviousLeastPosition.x);            
 
 
         }

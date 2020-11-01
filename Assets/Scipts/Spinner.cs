@@ -47,7 +47,7 @@ public class Spinner : MonoBehaviour
             {
                 Palm = GameObject.Find("InteractionHand_R").transform.Find("Palm Transform");
             }
-            print("POS " + Palm.transform.position);            
+            // print("POS " + Palm.transform.position);            
             // print("POS " + Palm.transform.position.x);            
             xPos = Palm.transform.position.x;
             yPos = Palm.transform.position.y;

@@ -40,7 +40,7 @@ namespace Leap.Unity.Examples {
 
     private void onPostPhysics() {
 
-        print("HELLO");
+        // print("HELLO");
       //Swapping when both objects are grasped is unsupported
       if(objA.isGrasped && objB.isGrasped) { return; }
   

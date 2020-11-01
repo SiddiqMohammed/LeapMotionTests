@@ -1,197 +1,206 @@
-﻿using Leap;
-using System.Collections;
-using System.Collections.Generic;
-using TMPro;
-using UnityEditor;
-using UnityEngine;
+﻿// using Leap;
+// using System.Collections;
+// using System.Collections.Generic;
+// using TMPro;
+// using UnityEditor;
+// using UnityEngine;
 
-[System.Serializable]
-public struct Gesture
-{
-    public string name;
-    public Vector3[] fingerPositions;
-}
+// [System.Serializable]
+// public struct Gesture
+// {
+//     public string name;
+//     public Vector3[] fingerPositions;
+// }
 
-public class gestureDetector : MonoBehaviour
-{
-    public string currentGestureName;
+// public class gestureDetector : MonoBehaviour
+// {
+//     public string currentGestureName;
 
-    public float tolerance;
-    public Vector3[] leftHandPos = new Vector3[15];
-    public Vector3[] rightHandPos = new Vector3[15];
-    public bool saveActive = false;
+//     public float tolerance;
+//     public Vector3[] leftHandPos = new Vector3[15];
+//     public Vector3[] rightHandPos = new Vector3[15];
+//     public bool saveActive = true;
 
-    public List<Gesture> gestureList;
+//     public List<Gesture> gestureList;
 
-    // Update is called once per frame
-    void Update()
-    {
-        if (Input.GetKeyDown(KeyCode.S) && saveActive)
-        {
-            // SaveL();
-            SaveR();
-            print("saved");
-        }
+//     // Update is called once per frame
+//     void Update()
+//     {
+//         if (Input.GetKeyDown(KeyCode.S) && saveActive)
+//         {
+//             // SaveL();
+//             SaveR();
+//             print("saved");
+//         }
 
-        //left hand
-        // try
-        // {
-        //     var leftHand = GameObject.Find("Interaction Hand (Left)");
-        //     LeftHandPos(leftHand);
-        //     SetCurrentGesture(leftHand);
-        //     DrawGestureName();
-        // }
-        // catch
-        // {}
+//         //left hand
+//         // try
+//         // {
+//         //     var leftHand = GameObject.Find("Interaction Hand (Left)");
+//         //     LeftHandPos(leftHand);
+//         //     SetCurrentGesture(leftHand);
+//         //     DrawGestureName();
+//         // }
+//         // catch
+//         // {}
 
-        try
-        {
-            var rightHand = GameObject.Find("Interaction Hand (Right)");
-            RightHandPos(rightHand);
-            SetCurrentGesture(rightHand);
-            DrawGestureName();
-        }
-        catch
-        {}
+//         // var testPlane = GameObject.Find("Plane");
+//         // print(testPlane.transform.position);
+//         // var testPlane1 = GameObject.Find("PlaneGrandChild");
+//         // print(testPlane1.transform.position);
+
+//         try
+//         {
+//             // var rightHand = GameObject.Find("InteractionHand_R");
+//             var testPlane = GameObject.Find("Palm Transform");
+//             print("POS " + testPlane.transform.position);
+//             // var rightHand = transform.Find("Interaction Manager/InteractionHand_R/Palm Transform").gameObject;
+//             // print(rightHand);
+//             // RightHandPos(rightHand);
+//             // SetCurrentGesture(rightHand);
+//             // DrawGestureName();
+//         }
+//         catch
+//         {}
 
 
-    }
+//     }
 
-    void DrawGestureName()
-    {
-        // TextMeshPro leftHand = GameObject.Find("LeftGestureName").GetComponent<TextMeshPro>();
-        // leftHand.text = currentGestureName;
+//     void DrawGestureName()
+//     {
+//         // TextMeshPro leftHand = GameObject.Find("LeftGestureName").GetComponent<TextMeshPro>();
+//         // leftHand.text = currentGestureName;
         
-        TextMeshPro rightHand = GameObject.Find("RightGestureName").GetComponent<TextMeshPro>();
-        rightHand.text = currentGestureName;
-    }
+//         TextMeshPro rightHand = GameObject.Find("RightGestureName").GetComponent<TextMeshPro>();
+//         rightHand.text = currentGestureName;
+//     }
 
-    void SetCurrentGesture(GameObject rightHand)
-    {
-        foreach (Gesture gesture in gestureList)
-        {
-            bool tooFar = false;
-            float totalDiff = 0;
+//     void SetCurrentGesture(GameObject rightHand)
+//     {
+//         foreach (Gesture gesture in gestureList)
+//         {
+//             bool tooFar = false;
+//             float totalDiff = 0;
 
-            for (int i = 0; i < 15; i++)
-            {
-                Vector3 thisBone = rightHand.transform.InverseTransformPoint(rightHandPos[i]);
-                float difference = Vector3.Distance(thisBone, gesture.fingerPositions[i]);
+//             for (int i = 0; i < 15; i++)
+//             {
+//                 Vector3 thisBone = rightHand.transform.InverseTransformPoint(rightHandPos[i]);
+//                 float difference = Vector3.Distance(thisBone, gesture.fingerPositions[i]);
 
-                if (difference > tolerance)
-                {
-                    tooFar = true;
-                    break;
-                }
+//                 if (difference > tolerance)
+//                 {
+//                     tooFar = true;
+//                     break;
+//                 }
 
-                totalDiff += difference;
-            }
+//                 totalDiff += difference;
+//             }
 
-            if (!tooFar && totalDiff < tolerance)
-            {
-                currentGestureName = gesture.name;
-            }
-            else
-            {
-                currentGestureName = "Not Sure";
-            }
-        }
-    }
+//             if (!tooFar && totalDiff < tolerance)
+//             {
+//                 currentGestureName = gesture.name;
+//             }
+//             else
+//             {
+//                 currentGestureName = "Not Sure";
+//             }
+//         }
+//     }
 
-    void LeftHandPos(GameObject leftHand)
-    {
-        int counter = 0;
-        for (int i = 0; i < 5; i++)
-        {
-            Transform finger = leftHand.transform.GetChild(i);
+//     // void LeftHandPos(GameObject leftHand)
+//     // {
+//     //     int counter = 0;
+//     //     for (int i = 0; i < 5; i++)
+//     //     {
+//     //         Transform finger = leftHand.transform.GetChild(i);
 
-            for (int j = 0; j < 3; j++)
-            {
-                leftHandPos[counter] = finger.GetChild(j).transform.position;
-                counter++;
-            }
-        }
-    }
-    void RightHandPos(GameObject rightHand)
-    {
-        int counter = 0;
-        for (int i = 0; i < 5; i++)
-        {
-            Transform finger = rightHand.transform.GetChild(i);
+//     //         for (int j = 0; j < 3; j++)
+//     //         {
+//     //             leftHandPos[counter] = finger.GetChild(j).transform.position;
+//     //             counter++;
+//     //         }
+//     //     }
+//     // }
+//     void RightHandPos(GameObject rightHand)
+//     {
+//         int counter = 0;
+//         for (int i = 0; i < 5; i++)
+//         {
+//             Transform finger = rightHand.transform.GetChild(i);
 
-            for (int j = 0; j < 3; j++)
-            {
-                rightHandPos[counter] = finger.GetChild(j).transform.position;
-                counter++;
-            }
-        }
-    }
+//             for (int j = 0; j < 3; j++)
+//             {
+//                 rightHandPos[counter] = finger.GetChild(j).transform.position;
+//                 counter++;
+//             }
+//         }
+//     }
 
-    void SaveL()
-    {
-        var tempGesture = new Gesture();
-        tempGesture.name = "Custom Gesture " + (gestureList.Count - 1);
+//     void SaveL()
+//     {
+//         var tempGesture = new Gesture();
+//         tempGesture.name = "Custom Gesture " + (gestureList.Count - 1);
 
        
-        try
-        {
-            var leftHand = GameObject.Find("Interaction Hand (Left)");
-            Vector3[] tempPos = new Vector3[15];
-            int counter = 0;
+//         try
+//         {
+//             var leftHand = GameObject.Find("RigidRoundHand_L");
+//             Vector3[] tempPos = new Vector3[15];
+//             int counter = 0;
 
-            for (int i = 0; i < 5; i++)
-            {
-                Transform finger = leftHand.transform.GetChild(i);
+//             for (int i = 0; i < 5; i++)
+//             {
+//                 Transform finger = leftHand.transform.GetChild(i);
 
-                for (int j = 0; j < 3; j++)
-                {
-                    tempPos[counter] = finger.GetChild(j).transform.position;
-                    counter++;
-                }
-            }
+//                 for (int j = 0; j < 3; j++)
+//                 {
+//                     tempPos[counter] = finger.GetChild(j).transform.position;
+//                     counter++;
+//                 }
+//             }
 
-            tempGesture.fingerPositions = tempPos;
+//             tempGesture.fingerPositions = tempPos;
 
-            gestureList.Add(tempGesture);
-        }
-        catch (System.Exception)
-        {
+//             gestureList.Add(tempGesture);
+//         }
+//         catch (System.Exception)
+//         {
 
-        }
+//         }
        
-    }
+//     }
     
-    void SaveR()
-    {
-        var tempGesture = new Gesture();
-        tempGesture.name = "Custom Gesture " + (gestureList.Count - 1);
+//     void SaveR()
+//     {
+//         var tempGesture = new Gesture();
+//         tempGesture.name = "Custom Gesture " + (gestureList.Count - 1);
 
        
-        try
-        {
-            var rightHand = GameObject.Find("Interaction Hand (Right)");
-            Vector3[] tempPos = new Vector3[15];
-            int counter = 0;
+//         try
+//         {
+//             var rightHand = GameObject.Find("RigidRoundHand_R");
+//             Vector3[] tempPos = new Vector3[15];
+//             int counter = 0;
 
-            for (int i = 0; i < 5; i++)
-            {
-                Transform finger = rightHand.transform.GetChild(i);
+//             for (int i = 0; i < 5; i++)
+//             {
+//                 Transform finger = rightHand.transform.GetChild(i);
 
-                for (int j = 0; j < 3; j++)
-                {
-                    tempPos[counter] = finger.GetChild(j).transform.position;
-                    counter++;
-                }
-            }
+//                 for (int j = 0; j < 3; j++)
+//                 {
+//                     tempPos[counter] = finger.GetChild(j).transform.position;
+//                     counter++;
+//                 }
+//             }
 
-            tempGesture.fingerPositions = tempPos;
+//             tempGesture.fingerPositions = tempPos;
 
-            gestureList.Add(tempGesture);
-        }
-        catch (System.Exception)
-        {
+//             gestureList.Add(tempGesture);
+//         }
+//         catch (System.Exception)
+//         {
 
-        }
+//         }
        
-    }
-}
+//     }
+// }

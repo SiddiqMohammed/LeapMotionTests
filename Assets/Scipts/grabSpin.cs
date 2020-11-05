@@ -55,15 +55,15 @@ public class grabSpin : MonoBehaviour
             IndexPos = IndexFinger.transform.position;
             MiddlePos = MiddleFinger.transform.position;
             
-            print(palmPos.x);
-            print(IndexPos.x);
+            // print(palmPos.x);
+            // print(IndexPos.x);
 
             // calibrate fist
             if (Input.GetKeyDown(KeyCode.A))
             {
                 setCallibrator = true;
-                print(palmPos);
-                print(IndexPos);
+                // print("palmPos" + palmPos);
+                // print("IndexPos" + IndexPos);
 
             }
 
@@ -72,7 +72,9 @@ public class grabSpin : MonoBehaviour
                 if (palmPos.x - IndexPos.x < PreviousLeastPosition.x)
                 {
                     PreviousLeastPosition.x = IndexPos.x;
+                    print(PreviousLeastPosition);
                 }
+                setCallibrator = false;
             }
 
 

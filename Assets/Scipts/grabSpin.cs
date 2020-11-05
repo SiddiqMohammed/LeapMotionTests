@@ -27,6 +27,7 @@ public class grabSpin : MonoBehaviour
 
     Vector3 palmPos, IndexPos, MiddlePos;
     Vector3 PreviousLeastPosition = new Vector3(100000f, 10000f, 10000f);
+    Vector3 initialPos = new Vector3(0f, 0f, 0f);
 
     double FistValue = 0.08039556;
 
@@ -38,8 +39,14 @@ public class grabSpin : MonoBehaviour
     float smooth = 5.0f;
 
     GameObject targetObj;
+    GameObject targetObj2;
 
+    float i = 0;
 
+    void Start() {
+        targetObj = GameObject.Find("grabSpin");
+        targetObj2 = GameObject.Find("car 1203 blue");
+    }
     // Update is called once per frame
     void Update()
     {
@@ -48,35 +55,18 @@ public class grabSpin : MonoBehaviour
             // IndexFinger is Fingertip Transform 2
             // MiddleFinger is Fingertip Transform 3
             
-
             Palm = GameObject.Find("InteractionHand_L").transform.Find("Palm Transform");
             IndexFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 2");
             MiddleFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 3");
-
-            // PalmR = GameObject.Find("InteractionHand_R").transform.Find("Palm Transform");
-            // IndexFingerR = GameObject.Find("InteractionHand_R").transform.Find("Fingertip Transform 2");
-            // MiddleFingerR = GameObject.Find("InteractionHand_R").transform.Find("Fingertip Transform 3");
-
 
             palmPos = Palm.transform.position;
             IndexPos = IndexFinger.transform.position;
             MiddlePos = MiddleFinger.transform.position;
             
-            // print(palmPos.x);
-            // print(IndexPos.x);
 
             // calibrate fist
             if (Input.GetKeyDown(KeyCode.A))
             {
-                setCallibrator = true;
-                // print("palmPos" + palmPos);
-                // print("IndexPos" + IndexPos);
-
-            }
-
-            if (setCallibrator)
-            {
-        
                 subtraction = palmPos.x - IndexPos.x;
 
                 // if (palmPos.x - IndexPos.x < PreviousLeastPosition.x)
@@ -84,17 +74,19 @@ public class grabSpin : MonoBehaviour
                 //     PreviousLeastPosition.x = IndexPos.x;
                 // }
                 print(subtraction);
-                setCallibrator = false;
+
             }
+
 
             subtraction = palmPos.x - IndexPos.x;
             
             // Check if hand is in fist position
-            if (subtraction > -0.05)
+            if (subtraction > -0.05 && palmPos != initialPos)
             {
                 print("fist");
 
-                targetObj = GameObject.Find("grabSpin");
+                // targetObj = GameObject.Find("grabSpin");
+                // targetObj2 = GameObject.Find("car 1203 blue");
 
                 float tiltAroundZ = palmPos.x * tiltAngle;
 
@@ -102,8 +94,15 @@ public class grabSpin : MonoBehaviour
 
                 // Dampen towards the target rotation
                 targetObj.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
+                targetObj2.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
         
-            }
+            } 
+            // else
+            // {
+            //     Quaternion target2 = Quaternion.Euler(0, i, 0);
+            //     targetObj2.transform.rotation = Quaternion.Slerp(transform.rotation, target2,  Time.deltaTime * 1);
+            //     i += 5f;
+            // }
 
 
 

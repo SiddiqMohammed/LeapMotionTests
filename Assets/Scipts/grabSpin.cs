@@ -32,6 +32,13 @@ public class grabSpin : MonoBehaviour
 
     bool setCallibrator = false;
 
+    float subtraction = 0;
+
+    float tiltAngle = 60.0f;
+    float smooth = 5.0f;
+
+    GameObject targetObj;
+
 
     // Update is called once per frame
     void Update()
@@ -69,13 +76,36 @@ public class grabSpin : MonoBehaviour
 
             if (setCallibrator)
             {
-                if (palmPos.x - IndexPos.x < PreviousLeastPosition.x)
-                {
-                    PreviousLeastPosition.x = IndexPos.x;
-                    print(PreviousLeastPosition);
-                }
+        
+                subtraction = palmPos.x - IndexPos.x;
+
+                // if (palmPos.x - IndexPos.x < PreviousLeastPosition.x)
+                // {
+                //     PreviousLeastPosition.x = IndexPos.x;
+                // }
+                print(subtraction);
                 setCallibrator = false;
             }
+
+            subtraction = palmPos.x - IndexPos.x;
+            
+            // Check if hand is in fist position
+            if (subtraction > -0.05)
+            {
+                print("fist");
+
+                targetObj = GameObject.Find("grabSpin");
+
+                float tiltAroundZ = palmPos.x * tiltAngle;
+
+                Quaternion target = Quaternion.Euler(0, -tiltAroundZ, 0);
+
+                // Dampen towards the target rotation
+                targetObj.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
+        
+            }
+
+
 
 
             // if (palmPos.x - IndexPos.x == (FistValue + 0.1) || palmPos.x - IndexPos.x == (FistValue - 0.1))

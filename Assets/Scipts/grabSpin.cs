@@ -34,7 +34,7 @@ public class grabSpin : MonoBehaviour
 
     float subtraction = 0;
 
-    float tiltAngle = 60.0f;
+    float tiltAngle = 360.0f;
     float smooth = 5.0f;
 
     GameObject targetObj;

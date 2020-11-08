@@ -6,7 +6,7 @@ using UnityEditor;
 using UnityEngine;
 
 
-public class palmOrientation : MonoBehaviour
+public class fingerPointing : MonoBehaviour
 {
 
     public float tolerance;
@@ -25,16 +25,11 @@ public class palmOrientation : MonoBehaviour
     float subtractionX = 0;
     float subtractionY = 0;
 
-    GameObject targetObj;
-    GameObject targetObj2;
 
     float i = 0;
 
     void Start() {
-        // targetObj = GameObject.Find("grabSpin");
-        // targetObj2 = GameObject.Find("car 1203 blue");
-
-                  
+        
         // Thumb is Fingertip Transform 1
         // Pinky is Fingertip Transform 5  
         thumbFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 1");

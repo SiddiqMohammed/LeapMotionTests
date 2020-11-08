@@ -33,7 +33,8 @@ public class grabSpin : MonoBehaviour
 
     bool setCallibrator = false;
 
-    float subtraction = 0;
+    float subtractionX = 0;
+    float subtractionY = 0;
 
     float tiltAngle = 360.0f;
     float smooth = 5.0f;
@@ -46,19 +47,19 @@ public class grabSpin : MonoBehaviour
     void Start() {
         targetObj = GameObject.Find("grabSpin");
         targetObj2 = GameObject.Find("car 1203 blue");
+
+        // IndexFinger is Fingertip Transform 2
+        // MiddleFinger is Fingertip Transform 3
+        
+        Palm = GameObject.Find("InteractionHand_L").transform.Find("Palm Transform");
+        IndexFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 2");
+        MiddleFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 3");
     }
     // Update is called once per frame
     void Update()
     {
         try
         {
-            // IndexFinger is Fingertip Transform 2
-            // MiddleFinger is Fingertip Transform 3
-            
-            Palm = GameObject.Find("InteractionHand_L").transform.Find("Palm Transform");
-            IndexFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 2");
-            MiddleFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 3");
-
             palmPos = Palm.transform.position;
             IndexPos = IndexFinger.transform.position;
             MiddlePos = MiddleFinger.transform.position;
@@ -67,7 +68,7 @@ public class grabSpin : MonoBehaviour
             // calibrate fist
             if (Input.GetKeyDown(KeyCode.A))
             {
-                subtraction = palmPos.x - IndexPos.x;
+                subtractionX = palmPos.x - IndexPos.x;
 
                 // if (palmPos.x - IndexPos.x < PreviousLeastPosition.x)
                 // {
@@ -77,25 +78,30 @@ public class grabSpin : MonoBehaviour
 
             }
 
-            subtraction = palmPos.x - IndexPos.x;
+            subtractionX = palmPos.x - IndexPos.x;
+            subtractionY = palmPos.y - IndexPos.y;
+            // print(subtractionY);
             
-            // Check if hand is in fist position
-            if (subtraction > -0.05 && palmPos != initialPos)
+            if (palmPos != initialPos)
             {
-                // print("fist");
+                // Check if hand is in fist position facing down
+                if (subtractionX > -0.06 && subtractionX < 0.06)
+                {
+                    print("fist");
 
-                float tiltAroundZ = palmPos.x * tiltAngle;
+                    float tiltAroundZ = palmPos.x * tiltAngle;
 
-                Quaternion target = Quaternion.Euler(0, -tiltAroundZ, 0);
+                    Quaternion target = Quaternion.Euler(0, -tiltAroundZ, 0);
 
-                // Dampen towards the target rotation
-                targetObj.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
-                targetObj2.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
-        
-            } 
-
-            // Thumb is Fingertip Transform 1
-            // Pinky is Fingertip Transform 5
+                    // Dampen towards the target rotation
+                    targetObj.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
+                    targetObj2.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
+                }
+                // else if (subtractionY > -0.03 && subtractionY < -0.02)
+                // {
+                //     print("fist side");
+                // }
+            }
 
         }
         catch

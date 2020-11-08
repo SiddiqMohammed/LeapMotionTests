@@ -73,7 +73,7 @@ public class grabSpin : MonoBehaviour
                 // {
                 //     PreviousLeastPosition.x = IndexPos.x;
                 // }
-                print(subtraction);
+                // print(subtraction);
 
             }
 

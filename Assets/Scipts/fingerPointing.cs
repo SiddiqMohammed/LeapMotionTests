@@ -50,21 +50,16 @@ public class fingerPointing : MonoBehaviour
 
             // print(subtractionY);
             
-            if (thumbPos != initialPos)
+            // if (thumbPos != initialPos)
+            // {
+
+            // }
+
+            if (Input.GetKeyDown(KeyCode.X))
             {
-                if (subtractionX < 0.4 && subtractionX > 0.2)
-                {
-                    print("down");
-                }
-                else if (subtractionX > -0.4 && subtractionX < -0.2)
-                {
-                    print("up");
-                }
-                else if (subtractionY > 0.1)
-                {
-                    print("side");
-                }
+                
             }
+
 
 
         }

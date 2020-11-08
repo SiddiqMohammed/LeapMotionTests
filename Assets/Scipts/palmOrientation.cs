@@ -58,13 +58,18 @@ public class palmOrientation : MonoBehaviour
             
             subtraction = thumbPos.x - pinkyPos.x;
 
-            if (subtraction < 0)
+
+            if (subtraction < 0.3 && subtraction > 0.2)
             {
-                print("Up");
+                print("down");
+            }
+            else if (subtraction > -0.4 && subtraction < -0.2)
+            {
+                print("up");
             }
             else
             {
-                print("Down");
+                print("side");
             }
 
 

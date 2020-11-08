@@ -82,7 +82,7 @@ public class grabSpin : MonoBehaviour
             // Check if hand is in fist position
             if (subtraction > -0.05 && palmPos != initialPos)
             {
-                print("fist");
+                // print("fist");
 
                 float tiltAroundZ = palmPos.x * tiltAngle;
 

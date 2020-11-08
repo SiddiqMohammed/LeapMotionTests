@@ -7,6 +7,9 @@ public class Spawner : MonoBehaviour
     public GameObject ball;
     public GameObject cube;
     public Transform spawnPoint;
+    Vector3 myVector;
+    
+
     // Update is called once per frame
     void Update()
     {
@@ -29,14 +32,16 @@ public class Spawner : MonoBehaviour
     {
         for (int i = 0; i < num; i++)
         {
-            Instantiate(ball, spawnPoint.position, spawnPoint.rotation);
+            myVector = new Vector3(Random.Range(spawnPoint.position.x + 1, spawnPoint.position.x - 1), spawnPoint.position.y, Random.Range(spawnPoint.position.z + 1, spawnPoint.position.z - 1));
+            Instantiate(ball, myVector, spawnPoint.rotation);
         }
     }
     void spawnCube(int num)
     {
         for (int i = 0; i < num; i++)
         {
-            Instantiate(cube, spawnPoint.position, Quaternion.identity);
+            myVector = new Vector3(Random.Range(spawnPoint.position.x + 1, spawnPoint.position.x - 1), spawnPoint.position.y, Random.Range(spawnPoint.position.z + 1, spawnPoint.position.z - 1));
+            Instantiate(cube, myVector, Quaternion.identity);
         }
     }    
 }

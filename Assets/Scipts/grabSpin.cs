@@ -77,16 +77,12 @@ public class grabSpin : MonoBehaviour
 
             }
 
-
             subtraction = palmPos.x - IndexPos.x;
             
             // Check if hand is in fist position
             if (subtraction > -0.05 && palmPos != initialPos)
             {
                 print("fist");
-
-                // targetObj = GameObject.Find("grabSpin");
-                // targetObj2 = GameObject.Find("car 1203 blue");
 
                 float tiltAroundZ = palmPos.x * tiltAngle;
 
@@ -97,29 +93,9 @@ public class grabSpin : MonoBehaviour
                 targetObj2.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
         
             } 
-            // else
-            // {
-            //     Quaternion target2 = Quaternion.Euler(0, i, 0);
-            //     targetObj2.transform.rotation = Quaternion.Slerp(transform.rotation, target2,  Time.deltaTime * 1);
-            //     i += 5f;
-            // }
 
-
-
-
-            // if (palmPos.x - IndexPos.x == (FistValue + 0.1) || palmPos.x - IndexPos.x == (FistValue - 0.1))
-            // {
-            //     print("fist");
-            // }
-            // else
-            // {
-            //     print("open");
-            // }
-
-
-            // print("POS " + Palm.transform.position);            
-            // print(PreviousLeastPosition.x);            
-
+            // Thumb is Fingertip Transform 1
+            // Pinky is Fingertip Transform 5
 
         }
         catch

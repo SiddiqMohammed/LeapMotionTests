@@ -19,21 +19,14 @@ public class palmOrientation : MonoBehaviour
     Transform pinkyFinger;
 
     Vector3 thumbPos, pinkyPos;
-    Vector3 PreviousLeastPosition = new Vector3(100000f, 10000f, 10000f);
     Vector3 initialPos = new Vector3(0f, 0f, 0f);
 
     float subtractionX = 0;
     float subtractionY = 0;
 
-    GameObject targetObj;
-    GameObject targetObj2;
-
     float i = 0;
 
     void Start() {
-        // targetObj = GameObject.Find("grabSpin");
-        // targetObj2 = GameObject.Find("car 1203 blue");
-
                   
         // Thumb is Fingertip Transform 1
         // Pinky is Fingertip Transform 5  
@@ -53,21 +46,20 @@ public class palmOrientation : MonoBehaviour
             subtractionX = thumbPos.x - pinkyPos.x;
             subtractionY = thumbPos.y - pinkyPos.y;
 
-            // print(subtractionY);
-            
+
             if (thumbPos != initialPos)
             {
                 if (subtractionX < 0.4 && subtractionX > 0.2)
                 {
-                    print("down");
+                    // print("down");
                 }
                 else if (subtractionX > -0.4 && subtractionX < -0.2)
                 {
-                    print("up");
+                    // print("up");
                 }
                 else if (subtractionY > 0.1)
                 {
-                    print("side");
+                    // print("side");
                 }
             }
 

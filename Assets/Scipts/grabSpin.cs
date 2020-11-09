@@ -72,30 +72,38 @@ public class grabSpin : MonoBehaviour
             subtractionY = palmPos.y - IndexPos.y;
 
             distanceBW = Math.Sqrt(Math.Pow((palmPos.x - IndexPos.x), 2) + Math.Pow((palmPos.y - IndexPos.y), 2) + Math.Pow((palmPos.z - IndexPos.z), 2));
-            print("distanceBW " + distanceBW);
+            // print("distanceBW " + distanceBW);
+
+            if (palmPos != initialPos)
+            {
+                if (distanceBW < 0.08 && distanceBW > 0.06)
+                {
+                    print("fist");
+                }
+            }
 
             // print(subtractionY);
             
-            if (palmPos != initialPos)
-            {
-                // Check if hand is in fist position facing down
-                if (subtractionX > -0.06 && subtractionX < 0.06)
-                {
-                    print("fist");
+            // if (palmPos != initialPos)
+            // {
+            //     // Check if hand is in fist position facing down
+            //     if (subtractionX > -0.06 && subtractionX < 0.06)
+            //     {
+            //         print("fist");
 
-                    float tiltAroundZ = palmPos.x * tiltAngle;
+            //         float tiltAroundZ = palmPos.x * tiltAngle;
 
-                    Quaternion target = Quaternion.Euler(0, -tiltAroundZ, 0);
+            //         Quaternion target = Quaternion.Euler(0, -tiltAroundZ, 0);
 
-                    // Dampen towards the target rotation
-                    targetObj.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
-                    targetObj2.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
-                }
-                // else if (subtractionY > -0.03 && subtractionY < -0.02)
-                // {
-                //     print("fist side");
-                // }
-            }
+            //         // Dampen towards the target rotation
+            //         targetObj.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
+            //         targetObj2.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
+            //     }
+            //     // else if (subtractionY > -0.03 && subtractionY < -0.02)
+            //     // {
+            //     //     print("fist side");
+            //     // }
+            // }
 
         }
         catch

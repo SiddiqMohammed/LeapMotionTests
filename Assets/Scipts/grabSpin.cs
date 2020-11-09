@@ -17,33 +17,18 @@ using System;
 public class grabSpin : MonoBehaviour
 {
 
-    public float tolerance;
-    public List<Gesture> gestureList;
-
-    float xPos, yPos, zPos;
-
     Transform Palm;
     Transform IndexFinger;
-    Transform MiddleFinger;
 
-    Vector3 palmPos, IndexPos, MiddlePos;
-    Vector3 PreviousLeastPosition = new Vector3(100000f, 10000f, 10000f);
+    Vector3 palmPos, IndexPos;
     Vector3 initialPos = new Vector3(0f, 0f, 0f);
 
-    double FistValue = 0.08039556;
-
-    bool setCallibrator = false;
-
-    float subtractionX = 0;
-    float subtractionY = 0;
-
-    float tiltAngle = 360.0f;
+    float tiltAroundZ;
+    public float tiltAngle = 360.0f;
     float smooth = 5.0f;
 
     GameObject targetObj;
     GameObject targetObj2;
-
-    float i = 0;
 
     double distanceBW;
 
@@ -55,7 +40,6 @@ public class grabSpin : MonoBehaviour
         // MiddleFinger is Fingertip Transform 3
         Palm = GameObject.Find("InteractionHand_L").transform.Find("Palm Transform");
         IndexFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 2");
-        MiddleFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 3");
     }
 
     void Update()
@@ -69,12 +53,12 @@ public class grabSpin : MonoBehaviour
             {
                 // Finding dist b/w Index finger and palm using 3D coordinate geometry
                 distanceBW = Math.Sqrt(Math.Pow((palmPos.x - IndexPos.x), 2) + Math.Pow((palmPos.y - IndexPos.y), 2) + Math.Pow((palmPos.z - IndexPos.z), 2));
-                // print("distanceBW " + distanceBW);
                 
                 if (distanceBW < 0.08 && distanceBW > 0.06)
                 {
                     print("fist");
-                    float tiltAroundZ = palmPos.x * tiltAngle;
+
+                    tiltAroundZ = palmPos.x * tiltAngle;
 
                     Quaternion target = Quaternion.Euler(0, -tiltAroundZ, 0);
 

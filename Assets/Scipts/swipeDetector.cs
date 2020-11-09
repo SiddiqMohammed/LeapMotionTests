@@ -8,7 +8,8 @@ using System;
 
 public class swipeDetector : MonoBehaviour
 {
-    public List<float> positionList = new List<float>();
+    public List<float> positionListX = new List<float>();
+    public List<float> positionListY = new List<float>();
 
     Transform Palm;
     Transform thumbFinger;
@@ -19,9 +20,13 @@ public class swipeDetector : MonoBehaviour
 
     Vector3 initialPos = new Vector3(0f, 0f, 0f);
     
+    float subtractionX = 0;
     float subtractionY = 0;
 
-    public float timeBetweenDetections = 0.25f;
+    public float timeBetweenDetectionsX = 0.25f;
+    public float timeBetweenDetectionsY = 0.25f;
+
+    double difference = 0.15;
 
     void Start() {
 
@@ -43,6 +48,7 @@ public class swipeDetector : MonoBehaviour
             thumbPos = thumbFinger.transform.position;
             pinkyPos = pinkyFinger.transform.position;
             
+            subtractionX = thumbPos.x - pinkyPos.x;
             subtractionY = thumbPos.y - pinkyPos.y;
 
 
@@ -53,39 +59,109 @@ public class swipeDetector : MonoBehaviour
                 if (subtractionY > 0.1)
                 {
 
-                    if (timeBetweenDetections > 0)
+                    if (timeBetweenDetectionsX > 0)
                     {
-                        timeBetweenDetections -= Time.deltaTime;
+                        timeBetweenDetectionsX -= Time.deltaTime;
 
-                        if (timeBetweenDetections <= 0)
+                        if (timeBetweenDetectionsX <= 0)
                         {
-                            positionList.Add(palmPos.x);
-                            // print(positionList.Count);
+                            positionListX.Add(palmPos.x);
+                            // print(positionListX.Count);
 
-                            timeBetweenDetections = 0.25f;
+                            timeBetweenDetectionsX = 0.25f;
 
-                            if (positionList.Count > 1)
+                            if (positionListX.Count > 1)
                             {
-                                if (positionList[1] - positionList[0] > 0.1)
+                                if (positionListX[1] - positionListX[0] > difference)
                                 {
-                                    print("rightSwipe");
+                                    print("SwipeRight");
 
                                     var cylinderRenderer = this.GetComponent<Renderer>();
                                     cylinderRenderer.material.SetColor("_Color", Color.red);
                                 }
 
-                                else if (positionList[0] - positionList[1] > 0.1)
+                                else if (positionListX[0] - positionListX[1] > difference)
                                 {
-                                    print("leftSwipe");
+                                    print("SwipeLeft");
+
                                     var cylinderRenderer = this.GetComponent<Renderer>();
                                     cylinderRenderer.material.SetColor("_Color", Color.blue);
                                 }
-                                positionList.Clear();
-
+                                positionListX.Clear();
                             }
                         }
                     }
 
+                }
+                // Hand facing up
+                else if (subtractionX > -0.4 && subtractionX < -0.2)
+                {
+                    if (timeBetweenDetectionsY > 0)
+                    {
+                        timeBetweenDetectionsY -= Time.deltaTime;
+
+                        if (timeBetweenDetectionsY <= 0)
+                        {
+                            positionListY.Add(palmPos.y);
+                            // print(positionListX.Count);
+
+                            timeBetweenDetectionsY = 0.25f;
+                            if (positionListY.Count > 1)
+                            {
+                                if (positionListY[1] - positionListY[0] > difference)
+                                {
+                                    print("SwipeUp");
+
+                                    // var cylinderRenderer = this.GetComponent<Renderer>();
+                                    // cylinderRenderer.material.SetColor("_Color", Color.red);
+                                }
+
+                                // else if (positionListY[0] - positionListY[1] > difference)
+                                // {
+                                //     print("SwipeDown");
+
+                                //     // var cylinderRenderer = this.GetComponent<Renderer>();
+                                //     // cylinderRenderer.material.SetColor("_Color", Color.blue);
+                                // }
+                                positionListY.Clear();
+                            }
+                        }
+                    }
+                }
+                // Hand facing down
+                else if (subtractionX < 0.4 && subtractionX > 0.2 && subtractionY >-0.07)
+                {
+                    if (timeBetweenDetectionsY > 0)
+                    {
+                        timeBetweenDetectionsY -= Time.deltaTime;
+
+                        if (timeBetweenDetectionsY <= 0)
+                        {
+                            positionListY.Add(palmPos.y);
+                            // print(positionListX.Count);
+
+                            timeBetweenDetectionsY = 0.25f;
+                            if (positionListY.Count > 1)
+                            {
+                                // if (positionListY[1] - positionListY[0] > difference)
+                                // {
+                                //     print("SwipeUp");
+
+                                //     // var cylinderRenderer = this.GetComponent<Renderer>();
+                                //     // cylinderRenderer.material.SetColor("_Color", Color.red);
+                                // }
+
+                                if (positionListY[0] - positionListY[1] > difference)
+                                {
+                                    print("SwipeDown");
+
+                                    // var cylinderRenderer = this.GetComponent<Renderer>();
+                                    // cylinderRenderer.material.SetColor("_Color", Color.blue);
+                                }
+                                positionListY.Clear();
+                            }
+                        }
+                    }
                 }
             }
 

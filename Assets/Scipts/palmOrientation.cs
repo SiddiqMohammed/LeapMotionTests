@@ -9,9 +9,6 @@ using UnityEngine;
 public class palmOrientation : MonoBehaviour
 {
 
-    public float tolerance;
-    public List<Gesture> gestureList;
-
     float xPos, yPos, zPos;
 
     Transform Palm;
@@ -24,6 +21,8 @@ public class palmOrientation : MonoBehaviour
     float subtractionX = 0;
     float subtractionY = 0;
     float subtractionZ = 0;
+
+    public bool printOrientations = false;
 
     float i = 0;
 
@@ -50,24 +49,26 @@ public class palmOrientation : MonoBehaviour
 
             // print(subtractionY);
 
-
-            if (thumbPos != initialPos)
+            if (printOrientations)
             {
-                if (subtractionX < 0.4 && subtractionX > 0.2 && subtractionY >-0.07)
+                if (thumbPos != initialPos)
                 {
-                    // print("down");
-                }
-                else if (subtractionX > -0.4 && subtractionX < -0.2)
-                {
-                    // print("up");
-                }
-                else if (subtractionY > 0.1)
-                {
-                    // print("side");
-                }
-                else if (subtractionY < -0.07 && subtractionY > -0.12)
-                {
-                    // print("forward");
+                    if (subtractionX < 0.4 && subtractionX > 0.2 && subtractionY >-0.07)
+                    {
+                        print("down");
+                    }
+                    else if (subtractionX > -0.4 && subtractionX < -0.2)
+                    {
+                        print("up");
+                    }
+                    else if (subtractionY > 0.1)
+                    {
+                        print("side");
+                    }
+                    else if (subtractionY < -0.07 && subtractionY > -0.12)
+                    {
+                        print("forward");
+                    }
                 }
             }
 

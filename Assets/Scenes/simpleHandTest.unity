@@ -3167,7 +3167,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c80c85c87852e8140bf633e61bb62059, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tiltAngle: 360
+  positionListX: []
+  positionListY: []
+  timeBetweenDetectionsX: 0.25
+  timeBetweenDetectionsY: 0.25
 --- !u!23 &1295449123
 MeshRenderer:
   m_ObjectHideFlags: 0
@@ -3321,8 +3324,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9be74dde85159b248b05e3a8f85639fd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  tolerance: 0
-  gestureList: []
+  printOrientations: 0
 --- !u!4 &1392047899
 Transform:
   m_ObjectHideFlags: 0

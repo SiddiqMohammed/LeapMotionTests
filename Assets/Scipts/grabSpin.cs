@@ -53,27 +53,21 @@ public class grabSpin : MonoBehaviour
 
         // IndexFinger is Fingertip Transform 2
         // MiddleFinger is Fingertip Transform 3
-        
         Palm = GameObject.Find("InteractionHand_L").transform.Find("Palm Transform");
         IndexFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 2");
         MiddleFinger = GameObject.Find("InteractionHand_L").transform.Find("Fingertip Transform 3");
     }
-    // Update is called once per frame
+
     void Update()
     {
         try
         {
             palmPos = Palm.transform.position;
             IndexPos = IndexFinger.transform.position;
-            MiddlePos = MiddleFinger.transform.position;
-            
-
-            subtractionX = palmPos.x - IndexPos.x;
-            subtractionY = palmPos.y - IndexPos.y;
-
 
             if (palmPos != initialPos)
             {
+                // Finding dist b/w Index finger and palm using 3D coordinate geometry
                 distanceBW = Math.Sqrt(Math.Pow((palmPos.x - IndexPos.x), 2) + Math.Pow((palmPos.y - IndexPos.y), 2) + Math.Pow((palmPos.z - IndexPos.z), 2));
                 // print("distanceBW " + distanceBW);
                 
@@ -90,28 +84,6 @@ public class grabSpin : MonoBehaviour
                 }
             }
 
-            // print(subtractionY);
-            
-            // if (palmPos != initialPos)
-            // {
-            //     // Check if hand is in fist position facing down
-            //     if (subtractionX > -0.06 && subtractionX < 0.06)
-            //     {
-            //         print("fist");
-
-            //         float tiltAroundZ = palmPos.x * tiltAngle;
-
-            //         Quaternion target = Quaternion.Euler(0, -tiltAroundZ, 0);
-
-            //         // Dampen towards the target rotation
-            //         targetObj.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
-            //         targetObj2.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
-            //     }
-            //     // else if (subtractionY > -0.03 && subtractionY < -0.02)
-            //     // {
-            //     //     print("fist side");
-            //     // }
-            // }
 
         }
         catch

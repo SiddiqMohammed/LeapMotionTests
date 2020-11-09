@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using System; 
 
 // [System.Serializable]
 // public struct Gesture
@@ -44,6 +45,8 @@ public class grabSpin : MonoBehaviour
 
     float i = 0;
 
+    double distanceBW;
+
     void Start() {
         targetObj = GameObject.Find("grabSpin");
         targetObj2 = GameObject.Find("car 1203 blue");
@@ -65,43 +68,42 @@ public class grabSpin : MonoBehaviour
             MiddlePos = MiddleFinger.transform.position;
             
 
-            // calibrate fist
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                subtractionX = palmPos.x - IndexPos.x;
-
-                // if (palmPos.x - IndexPos.x < PreviousLeastPosition.x)
-                // {
-                //     PreviousLeastPosition.x = IndexPos.x;
-                // }
-                // print(subtraction);
-
-            }
-
             subtractionX = palmPos.x - IndexPos.x;
             subtractionY = palmPos.y - IndexPos.y;
-            // print(subtractionY);
-            
+
+            distanceBW = Math.Sqrt(Math.Pow((palmPos.x - IndexPos.x), 2) + Math.Pow((palmPos.y - IndexPos.y), 2) + Math.Pow((palmPos.z - IndexPos.z), 2));
+            // print("distanceBW " + distanceBW);
+
             if (palmPos != initialPos)
             {
-                // Check if hand is in fist position facing down
-                if (subtractionX > -0.06 && subtractionX < 0.06)
+                if (distanceBW < 0.08 && distanceBW > 0.06)
                 {
                     print("fist");
-
-                    float tiltAroundZ = palmPos.x * tiltAngle;
-
-                    Quaternion target = Quaternion.Euler(0, -tiltAroundZ, 0);
-
-                    // Dampen towards the target rotation
-                    targetObj.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
-                    targetObj2.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
                 }
-                // else if (subtractionY > -0.03 && subtractionY < -0.02)
-                // {
-                //     print("fist side");
-                // }
             }
+
+            // print(subtractionY);
+            
+            // if (palmPos != initialPos)
+            // {
+            //     // Check if hand is in fist position facing down
+            //     if (subtractionX > -0.06 && subtractionX < 0.06)
+            //     {
+            //         print("fist");
+
+            //         float tiltAroundZ = palmPos.x * tiltAngle;
+
+            //         Quaternion target = Quaternion.Euler(0, -tiltAroundZ, 0);
+
+            //         // Dampen towards the target rotation
+            //         targetObj.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
+            //         targetObj2.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
+            //     }
+            //     // else if (subtractionY > -0.03 && subtractionY < -0.02)
+            //     // {
+            //     //     print("fist side");
+            //     // }
+            // }
 
         }
         catch

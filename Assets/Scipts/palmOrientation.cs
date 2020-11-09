@@ -23,6 +23,7 @@ public class palmOrientation : MonoBehaviour
 
     float subtractionX = 0;
     float subtractionY = 0;
+    float subtractionZ = 0;
 
     float i = 0;
 
@@ -45,11 +46,14 @@ public class palmOrientation : MonoBehaviour
             
             subtractionX = thumbPos.x - pinkyPos.x;
             subtractionY = thumbPos.y - pinkyPos.y;
+            subtractionZ = thumbPos.z - pinkyPos.z;
+
+            // print(subtractionY);
 
 
             if (thumbPos != initialPos)
             {
-                if (subtractionX < 0.4 && subtractionX > 0.2)
+                if (subtractionX < 0.4 && subtractionX > 0.2 && subtractionY >-0.07)
                 {
                     // print("down");
                 }
@@ -60,6 +64,10 @@ public class palmOrientation : MonoBehaviour
                 else if (subtractionY > 0.1)
                 {
                     // print("side");
+                }
+                else if (subtractionY < -0.07 && subtractionY > -0.12)
+                {
+                    // print("forward");
                 }
             }
 

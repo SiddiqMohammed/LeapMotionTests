@@ -49,6 +49,7 @@ public class swipeDetector : MonoBehaviour
             if (thumbPos != initialPos)
             {
                 // Check if the hand is sideways
+                // if (subtractionY < -0.07 && subtractionY > -0.12)
                 if (subtractionY > 0.1)
                 {
 

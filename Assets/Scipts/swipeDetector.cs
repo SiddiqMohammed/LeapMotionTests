@@ -68,6 +68,16 @@ public class swipeDetector : MonoBehaviour
                                 if (positionList[1] - positionList[0] > 0.1)
                                 {
                                     print("rightSwipe");
+
+                                    var cylinderRenderer = this.GetComponent<Renderer>();
+                                    cylinderRenderer.material.SetColor("_Color", Color.red);
+                                }
+
+                                else if (positionList[0] - positionList[1] > 0.1)
+                                {
+                                    print("leftSwipe");
+                                    var cylinderRenderer = this.GetComponent<Renderer>();
+                                    cylinderRenderer.material.SetColor("_Color", Color.blue);
                                 }
                                 positionList.Clear();
 

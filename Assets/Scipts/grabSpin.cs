@@ -80,6 +80,13 @@ public class grabSpin : MonoBehaviour
                 if (distanceBW < 0.08 && distanceBW > 0.06)
                 {
                     print("fist");
+                    float tiltAroundZ = palmPos.x * tiltAngle;
+
+                    Quaternion target = Quaternion.Euler(0, -tiltAroundZ, 0);
+
+                    // Dampen towards the target rotation
+                    targetObj.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
+                    targetObj2.transform.rotation = Quaternion.Slerp(transform.rotation, target,  Time.deltaTime * smooth);
                 }
             }
 

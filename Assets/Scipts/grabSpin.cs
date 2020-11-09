@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor;
 using UnityEngine;
+using System; 
 
 // [System.Serializable]
 // public struct Gesture
@@ -44,6 +45,8 @@ public class grabSpin : MonoBehaviour
 
     float i = 0;
 
+    double distanceBW;
+
     void Start() {
         targetObj = GameObject.Find("grabSpin");
         targetObj2 = GameObject.Find("car 1203 blue");
@@ -65,21 +68,12 @@ public class grabSpin : MonoBehaviour
             MiddlePos = MiddleFinger.transform.position;
             
 
-            // calibrate fist
-            if (Input.GetKeyDown(KeyCode.A))
-            {
-                subtractionX = palmPos.x - IndexPos.x;
-
-                // if (palmPos.x - IndexPos.x < PreviousLeastPosition.x)
-                // {
-                //     PreviousLeastPosition.x = IndexPos.x;
-                // }
-                // print(subtraction);
-
-            }
-
             subtractionX = palmPos.x - IndexPos.x;
             subtractionY = palmPos.y - IndexPos.y;
+
+            distanceBW = Math.Sqrt(Math.Pow((palmPos.x - IndexPos.x), 2) + Math.Pow((palmPos.y - IndexPos.y), 2) + Math.Pow((palmPos.z - IndexPos.z), 2));
+            print("distanceBW " + distanceBW);
+
             // print(subtractionY);
             
             if (palmPos != initialPos)
